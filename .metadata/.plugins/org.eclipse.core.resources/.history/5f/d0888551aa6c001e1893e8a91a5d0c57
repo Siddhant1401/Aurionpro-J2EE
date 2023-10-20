@@ -1,0 +1,54 @@
+package com.aurionpro.controller;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+import com.aurionpro.jdbc.StudentDbUtil;
+import com.aurionpro.model.Student;
+
+/**
+ * Servlet implementation class StudentController
+ */
+@WebServlet("/StudentController")
+public class StudentController extends HttpServlet {
+	@Resource(name = "jdbc/student-source")
+	private DataSource datasource;
+
+	private StudentDbUtil dbUtil;
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		dbUtil = new StudentDbUtil(datasource);
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	public StudentController() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		listStudent(request, response);
+		
+	}
+
+	private void listStudent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		List<Student> studentList = dbUtil.getAllStudents();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/list-students.jsp");
+		request.setAttribute("allStud", studentList);
+		dispatcher.forward(request, response);
+	}
+
+}

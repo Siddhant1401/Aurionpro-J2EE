@@ -1,0 +1,25 @@
+INDEX VERSION 1.130
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3223643830.index
+\07-student-mvc\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1407691064.index
+\07-BEER-APP\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3960470646.index
+\02-Form-JSP\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3796311664.index
+\04-JSTL-Tags\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\49243417.index
+\08-STUDENT-MVC\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\51184134.index
+\05-SERVLET-DEMO\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\363207240.index
+\03-SESSION-TODO-JSP\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\494417799.index
+\06-MVC-DEMO\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\125930200.index
+\08-STUDENT-MVC\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\2330413069.index
+\05-SERVLET-DEMO\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\1090618257.index
+\06-student-mvc\src
+D:\Aurionpro J2EE\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\4173033823.index
+\01-JSP-Demo\src

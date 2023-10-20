@@ -1,0 +1,10 @@
+package com.aurionpro.model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class StudentUtil {
+
+	List<Student> studentList = new ArrayList<Student>();
+	studentList.add
+}

@@ -1,0 +1,177 @@
+package com.aurionpro.controller;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
+
+import com.aurionpro.jdbc.StudentDbUtil;
+import com.aurionpro.model.Student;
+
+/**
+ * Servlet implementation class StudentController
+ */
+@WebServlet("/StudentController")
+public class StudentController extends HttpServlet {
+
+	@Resource(name = "jdbc/student-source")
+	private DataSource dataSource;
+
+	private StudentDbUtil dbUtil;
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		dbUtil = new StudentDbUtil(dataSource);
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	public StudentController() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String command = request.getParameter("action");
+		if (command == null) {
+			command = "list";
+		}
+		switch (command) {
+		case "list":
+			try {
+				listStudent(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			break;
+		case "add":
+			try {
+				addStudent(request, response);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// System.out.println("add");
+			break;
+
+		case "update":
+			try {
+				getStudentForUpdate(request, response);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			break;
+
+		case "update-save":
+			try {
+				updateStudent(request, response);
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			break;
+		case "delete":
+			try {
+				deleteStudent(request, response);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			break;
+		case "search":
+			try {
+				searchStudent(request, response);
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			break;
+
+		default:
+			try {
+				listStudent(request, response);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void searchStudent(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+	
+		String searchOption = request.getParameter("searchOption");
+		String searchValue = request.getParameter("searchValue");
+		System.out.println(searchOption);
+		System.out.println(searchValue);
+		List<Student> studentList = dbUtil.searchStudent(searchOption,searchValue);
+		System.out.println(studentList);
+		RequestDispatcher dispatcher= request.getRequestDispatcher("/student.jsp");
+		dispatcher.forward(request, response);
+		
+
+	}
+
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		dbUtil.deleteStudent(id);
+		System.out.println(id);
+		listStudent(request, response);
+	}
+
+	private void updateStudent(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		String fName = request.getParameter("first_name");
+		String lName = request.getParameter("last_name");
+		String email = request.getParameter("email");
+
+		Student newStudent = new Student(id, fName, lName, email);
+		dbUtil.updateStudent(newStudent);
+		listStudent(request, response);
+
+	}
+
+	private void getStudentForUpdate(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		Student student = dbUtil.getStudentById(id);
+		System.out.println(student);
+		request.setAttribute("student", student);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/update-student.jsp");
+		requestDispatcher.forward(request, response);
+	}
+
+	private void addStudent(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		String fName = request.getParameter("first_name");
+		String lName = request.getParameter("last_name");
+		String email = request.getParameter("email");
+
+		Student newStudent = new Student(fName, lName, email);
+		dbUtil.addNewStudent(newStudent);
+
+		listStudent(request, response);
+		// System.out.println(newStudent);
+
+	}
+
+	private void listStudent(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
+		List<Student> studentList = dbUtil.getAllStudents();
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/student.jsp");
+		request.setAttribute("allStud", studentList);
+		dispatcher.forward(request, response);
+	}
+
+}

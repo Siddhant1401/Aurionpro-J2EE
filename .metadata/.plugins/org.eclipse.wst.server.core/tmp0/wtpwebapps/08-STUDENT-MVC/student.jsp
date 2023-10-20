@@ -1,0 +1,85 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div class="container">
+		<h1>Student DataBase</h1>
+		<!-- --Seach Form -->
+		<form action="StudentController" method="get">
+			<div class="input-group mb-3">
+				<select class="form-control" name="searchOption">
+					<option value " ">Search Student</option>
+					<option value="searchid">ID</option>
+					<option value="searchFirstName">First Name</option>
+					<option value="searchlastName">Last Name</option>
+					<option value="searchEmail">Email</option>
+				</select>
+				<input type="text" class="form-control" id="searchValue"
+					placeholder="Search" name="searchValue">
+					<button class="btn btn-primary" type="submit">Search</button>
+				
+			</div>
+			<input type="hidden" name="action" value="search">
+
+
+		</form>
+		<table class="table table-striped table-hover">
+			<tr>
+				<th>ID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Action</th>
+				<th>Action</th>
+			</tr>
+			<c:forEach var="Student" items="${allStud}">
+
+				<c:url var="updateLink" value="StudentController">
+					<c:param name="action" value="update" />
+					<c:param name="id" value="${Student.id}" />
+				</c:url>
+
+				<c:url var="deleteLink" value="StudentController">
+					<c:param name="action" value="delete" />
+					<c:param name="id" value="${Student.id}" />
+				</c:url>
+
+
+
+
+				<tr>
+					<td>${Student.id}</td>
+					<td>${Student.firstName}</td>
+					<td>${Student.lastName}</td>
+					<td>${Student.email}</td>
+					<td><a href="${updateLink}" class="btn btn-warning">Update</a></td>
+					<td><a href="${deleteLink}" class="btn btn-danger">Delete</a></td>
+				</tr>
+			</c:forEach>
+
+
+		</table>
+
+		<a href="add-Student.jsp" class="btn btn-primary">Add Student</a>
+	</div>
+
+
+</body>
+
+</html>
